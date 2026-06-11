@@ -18,7 +18,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#030712] text-white font-sans antialiased selection:bg-brand-orange selection:text-black overflow-x-hidden">
 
-      {/* GLOBAL AMBIENT GLOWS */}
+      {/* GLOBAL AMBIENT GLOWS
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div
           className="absolute rounded-full"
@@ -51,7 +51,7 @@ export default function App() {
             WebkitFilter: 'blur(180px)',
           }}
         />
-        {/* Fix: bg-[linear-gradient(...)] custom bg shorthand can fail on older iOS — use style prop */}
+       
         <div
           className="absolute inset-0"
           style={{
@@ -59,7 +59,7 @@ export default function App() {
             backgroundSize: '4rem 4rem',
           }}
         />
-      </div>
+      </div> */}
 
       <Navbar />
       <main className="relative z-10">
