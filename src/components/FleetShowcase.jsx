@@ -7,28 +7,28 @@ const fleetItems = [
     capacity: "32 Ton High-Volume FTL",
     type: "heavy",
     desc: "Long-haul interstate freight distribution optimized for secure box configurations.",
-    img: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&q=80&w=600"
+    img: "https://png.pngtree.com/png-clipart/20250521/original/pngtree-an-orange-logistic-truck-with-container-png-image_21052117.png"
   },
   {
     name: "Heavy Cargo Transports",
     capacity: "Multi-Axle Specialized Assets",
     type: "heavy",
     desc: "Bespoke engineered machinery moving tools structural layout components.",
-    img: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600"
+    img: "https://png.pngtree.com/png-clipart/20250521/original/pngtree-an-orange-logistic-truck-with-container-png-image_21052117.png"
   },
   {
     name: "Cold-Chain Fleet",
     capacity: "Thermal-Controlled Units",
     type: "heavy",
     desc: "Continuous automated environment telemetry logging for pharmaceuticals.",
-    img: "https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&q=80&w=600"
+    img: "https://png.pngtree.com/png-clipart/20250521/original/pngtree-an-orange-logistic-truck-with-container-png-image_21052117.png"
   },
   {
     name: "Express Delivery Fleet",
     capacity: "3.5 Ton Fast Dispatch",
     type: "express",
     desc: "Hyper-localized high frequency urban freight drops handling rapid closeouts.",
-    img: "https://images.unsplash.com/photo-1527018601619-a508a2be00cd?auto=format&fit=crop&q=80&w=600"
+    img: "https://png.pngtree.com/png-clipart/20250521/original/pngtree-an-orange-logistic-truck-with-container-png-image_21052117.png"
   }
 ];
 
