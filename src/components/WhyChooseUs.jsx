@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const cards = [
   { num: '01', title: 'Pan India Coverage Logistics Network', span: 'md:col-span-2', color: 'text-blue-400', bg: 'rgba(37,99,235,0.3)', desc: 'We interconnect multiple major trading zones seamlessly. Our deep geographical network reach covers vital economic corridors across India, facilitating rapid regional cross-dock transitions.' },
@@ -34,13 +35,23 @@ export default function WhyChooseUs() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {cards.map(card => (
-          <div
+        {cards.map((card, idx) => (
+          <motion.div
             key={card.num}
-            className={`p-8 rounded-2xl border border-white/5 space-y-4 hover:border-white/10 transition-colors duration-300 ${card.span || ''}`}
+            initial={{ opacity: 0, y: 30, rotateX: 15 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.25, 1, 0.5, 1] }}
+            whileHover={{
+              y: -6,
+              boxShadow: '0 24px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)',
+              transition: { duration: 0.2 },
+            }}
+            className={`p-8 rounded-2xl border border-white/5 space-y-4 cursor-default ${card.span || ''}`}
             style={{
               backgroundColor: 'rgba(17,24,39,0.35)',
               boxShadow: '0 4px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+              transformOrigin: 'bottom center',
             }}
           >
             <div
@@ -51,7 +62,7 @@ export default function WhyChooseUs() {
             </div>
             <h3 className="text-2xl font-bold">{card.title}</h3>
             <p className="text-sm text-[#94A3B8] leading-relaxed">{card.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

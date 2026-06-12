@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const workflowSteps = [
   { step: '01', name: 'Instant Booking', desc: 'Upload manifest file formats straight through our enterprise API interface structures.' },
@@ -45,13 +46,25 @@ export default function ProcessTimeline() {
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 relative z-10">
-          {workflowSteps.map(proc => (
-            <div
+          {workflowSteps.map((proc, idx) => (
+            <motion.div
               key={proc.step}
-              className="border border-white/5 p-6 rounded-2xl space-y-4 hover:border-white/10 transition-colors duration-200"
+              initial={{ opacity: 0, y: 40, rotateX: 20 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: idx * 0.1, ease: [0.25, 1, 0.5, 1] }}
+              whileHover={{
+                y: -6,
+                boxShadow: '0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1)',
+                transition: { duration: 0.25 },
+              }}
+              className="border border-white/5 p-6 rounded-2xl space-y-4 cursor-default"
               style={{
                 backgroundColor: 'rgba(17,24,39,0.35)',
                 boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
+                transformOrigin: 'bottom center',
+                transformStyle: 'preserve-3d',
+                WebkitTransformStyle: 'preserve-3d',
               }}
             >
               <div
@@ -62,7 +75,7 @@ export default function ProcessTimeline() {
               </div>
               <h4 className="text-lg font-bold text-white">{proc.name}</h4>
               <p className="text-xs text-[#94A3B8] leading-relaxed">{proc.desc}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

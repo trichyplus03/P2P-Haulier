@@ -13,10 +13,7 @@ const services = [
 
 export default function Services() {
   return (
-    <section
-      id="services"
-      className="py-32 px-4 max-w-7xl mx-auto relative z-10"
-    >
+    <section id="services" className="py-32 px-4 max-w-7xl mx-auto relative z-10">
       <div
         className="absolute inset-0 -z-10 pointer-events-none overflow-hidden"
         style={{
@@ -34,12 +31,20 @@ export default function Services() {
         {services.map((srv, index) => (
           <motion.div
             key={srv.title}
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 25, rotateX: 12 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.45, delay: index * 0.03 }}
-            className={`${srv.size} relative group rounded-2xl border border-white/5 p-8 flex flex-col justify-between overflow-hidden hover:border-white/10 transition-colors duration-300`}
-            style={{ backgroundColor: 'rgba(17,24,39,0.35)' }}
+            transition={{ duration: 0.5, delay: index * 0.04, ease: [0.25, 1, 0.5, 1] }}
+            whileHover={{
+              y: -5,
+              boxShadow: '0 24px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1)',
+              transition: { duration: 0.2 },
+            }}
+            className={`${srv.size} relative group rounded-2xl border border-white/5 p-8 flex flex-col justify-between overflow-hidden cursor-default`}
+            style={{
+              backgroundColor: 'rgba(17,24,39,0.35)',
+              transformOrigin: 'bottom center',
+            }}
           >
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"

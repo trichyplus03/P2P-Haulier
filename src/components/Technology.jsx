@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 
 const techCards = [
@@ -18,8 +19,13 @@ export default function Technology() {
         }}
       />
       <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none -z-10"
-        style={{ background: 'radial-gradient(ellipse at top, rgba(37,99,235,0.1) 0%, transparent 70%)' }}
+        className="absolute top-0 left-1/2 -z-10 pointer-events-none"
+        style={{
+          width: '600px',
+          height: '300px',
+          marginLeft: '-300px',
+          background: 'radial-gradient(ellipse at top, rgba(37,99,235,0.1) 0%, transparent 70%)',
+        }}
       />
 
       <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
@@ -30,12 +36,22 @@ export default function Technology() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {techCards.map((tech, idx) => (
-          <div
+          <motion.div
             key={tech.title}
-            className="p-8 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-white/10 transition-colors duration-300 group"
+            initial={{ opacity: 0, y: 30, rotateX: 12 }}
+            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.55, delay: idx * 0.08, ease: [0.25, 1, 0.5, 1] }}
+            whileHover={{
+              y: -6,
+              boxShadow: '0 24px 48px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.1)',
+              transition: { duration: 0.2 },
+            }}
+            className="p-8 rounded-2xl border border-white/5 flex flex-col justify-between group cursor-default"
             style={{
               backgroundColor: 'rgba(17,24,39,0.35)',
               boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+              transformOrigin: 'bottom center',
             }}
           >
             <div>
@@ -62,11 +78,15 @@ export default function Technology() {
               <span>MODULE_ID // 0{idx + 1}</span>
               <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         className="mt-16 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center border border-white/5 p-8 rounded-3xl"
         style={{
           backgroundColor: 'rgba(17,24,39,0.25)',
@@ -81,14 +101,9 @@ export default function Technology() {
           </p>
         </div>
         <div className="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-white flex items-center justify-center p-4">
-          <img
-            src="/img1.jpg"
-            alt="P2P Workflow"
-            loading="lazy"
-            className="w-full h-auto object-contain max-h-[380px] rounded-lg"
-          />
+          <img src="/img1.jpg" alt="P2P Workflow" loading="lazy" className="w-full h-auto object-contain max-h-[380px] rounded-lg" />
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
