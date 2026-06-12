@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ShieldCheck, Users, Globe2, Award } from 'lucide-react';
 
 function formatNumber(num) {
@@ -20,15 +20,12 @@ const RunningCounter = ({ from = 0, to, duration = 1500, suffix = '' }) => {
         if (entry.isIntersecting && !started.current) {
           started.current = true;
           let startTime = null;
-
           const animate = (time) => {
             if (!startTime) startTime = time;
             const progress = Math.min((time - startTime) / duration, 1);
-            const value = Math.floor(progress * (to - from) + from);
-            setCount(value);
+            setCount(Math.floor(progress * (to - from) + from));
             if (progress < 1) requestAnimationFrame(animate);
           };
-
           requestAnimationFrame(animate);
         }
       },
@@ -39,12 +36,57 @@ const RunningCounter = ({ from = 0, to, duration = 1500, suffix = '' }) => {
     return () => { observer.disconnect(); };
   }, [from, to, duration]);
 
-  return (
-    <span ref={ref} className="font-mono">
-      {formatNumber(count)}{suffix}
-    </span>
-  );
+  return <span ref={ref} className="font-mono">{formatNumber(count)}{suffix}</span>;
 };
+
+function TiltCard({ children, delay }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(y, [-60, 60], [8, -8]), { stiffness: 200, damping: 20 });
+  const rotateY = useSpring(useTransform(x, [-60, 60], [-8, 8]), { stiffness: 200, damping: 20 });
+
+  function handleMouseMove(e) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set(e.clientX - rect.left - rect.width / 2);
+    y.set(e.clientY - rect.top - rect.height / 2);
+  }
+
+  function handleMouseLeave() {
+    x.set(0);
+    y.set(0);
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.4, delay }}
+      style={{
+        perspective: '800px',
+        transformStyle: 'preserve-3d',
+        WebkitTransformStyle: 'preserve-3d',
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <motion.div
+        style={{
+          rotateX,
+          rotateY,
+          transformStyle: 'preserve-3d',
+          WebkitTransformStyle: 'preserve-3d',
+          backgroundColor: 'rgba(17,24,39,0.25)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)',
+        }}
+        className="p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-white/10 transition-colors duration-300 h-full"
+      >
+        {children}
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function TrustMetrics() {
   const metrics = [
@@ -61,18 +103,7 @@ export default function TrustMetrics() {
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {metrics.map((metric, idx) => (
-          <motion.div
-            key={metric.title}
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.4, delay: idx * 0.03 }}
-            className="p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-white/10 transition-colors duration-300"
-            style={{
-              backgroundColor: 'rgba(17,24,39,0.25)',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
-            }}
-          >
+          <TiltCard key={metric.title} delay={idx * 0.03}>
             <div>
               <div
                 className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-brand-orange mb-4"
@@ -86,7 +117,7 @@ export default function TrustMetrics() {
               </h3>
             </div>
             <p className="text-sm text-gray-500 font-light leading-relaxed">{metric.desc}</p>
-          </motion.div>
+          </TiltCard>
         ))}
       </div>
     </section>

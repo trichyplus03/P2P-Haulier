@@ -15,9 +15,7 @@ export default function Hero() {
     >
       <div
         className="absolute inset-0 -z-10 overflow-hidden pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 80% 60% at 60% 30%, rgba(37,99,235,0.13) 0%, transparent 70%)',
-        }}
+        style={{ background: 'radial-gradient(ellipse 80% 60% at 60% 30%, rgba(37,99,235,0.13) 0%, transparent 70%)' }}
       />
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
@@ -84,98 +82,110 @@ export default function Hero() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, x: 20 }}
-          whileInView={{ opacity: 1, scale: 1, x: 0 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, ease: [0.25, 1, 0.5, 1] }}
           className="lg:col-span-6 relative"
+          style={{ perspective: '1200px' }}
         >
-          <div
-            className="relative rounded-2xl border border-white/10 p-4 shadow-2xl overflow-hidden"
-            style={{
-              backgroundColor: 'rgba(10,15,30,0.97)',
-              boxShadow: '0 24px 64px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05)',
-            }}
+          <motion.div
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(239,68,68,0.7)' }} />
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(234,179,8,0.7)' }} />
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(34,197,94,0.7)' }} />
-                <span className="text-xs text-gray-500 ml-2 font-mono">p2p-live-telemetry.io</span>
-              </div>
-              <span
-                className="text-[10px] px-2 py-0.5 rounded-md font-mono text-green-400"
-                style={{ backgroundColor: 'rgba(34,197,94,0.1)' }}
-              >
-                Operational
-              </span>
-            </div>
-
-            <div
-              className="h-[360px] w-full rounded-xl relative overflow-hidden border border-white/5 flex flex-col justify-between p-4"
-              style={{ backgroundColor: 'rgba(3,7,18,0.95)' }}
+            <motion.div
+              initial={{ rotateX: 8, rotateY: -6 }}
+              whileInView={{ rotateX: 2, rotateY: -2 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+              className="relative rounded-2xl border border-white/10 p-4 shadow-2xl overflow-hidden"
+              style={{
+                backgroundColor: 'rgba(10,15,30,0.97)',
+                boxShadow: '0 32px 80px rgba(0,0,0,0.7), 0 8px 24px rgba(37,99,235,0.15), inset 0 1px 0 rgba(255,255,255,0.06)',
+                transformStyle: 'preserve-3d',
+                WebkitTransformStyle: 'preserve-3d',
+              }}
             >
-              <div className="absolute inset-0 z-0">
-                <img
-                  src="/img2.jpg"
-                  alt="P2P Heavy Commercial Fleet Lineup"
-                  className="w-full h-full object-cover opacity-40"
-                  style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(to top, #030712 20%, rgba(3,7,18,0.3) 60%, transparent 100%)' }}
-                />
-              </div>
-
-              <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 400 200">
-                <path d="M 20 150 Q 120 30, 220 110 T 380 40" fill="none" stroke="rgba(30,41,59,0.5)" strokeWidth="3" />
-                <motion.path
-                  d="M 20 150 Q 120 30, 220 110 T 380 40"
-                  fill="none"
-                  stroke="#F6921E"
-                  strokeWidth="3"
-                  strokeDasharray="10, 10"
-                  animate={{ strokeDashoffset: [0, -20] }}
-                  transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-                />
-              </svg>
-
-              <div className="flex justify-between relative z-20">
-                <div
-                  className="border border-white/10 p-2.5 rounded-lg"
-                  style={{ backgroundColor: 'rgba(17,24,39,0.95)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}
-                >
-                  <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Origin</p>
-                  <p className="text-xs font-semibold text-white">Chennai Hub</p>
+              <div className="flex items-center justify-between border-b border-white/5 pb-3 mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(239,68,68,0.7)' }} />
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(234,179,8,0.7)' }} />
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'rgba(34,197,94,0.7)' }} />
+                  <span className="text-xs text-gray-500 ml-2 font-mono">p2p-live-telemetry.io</span>
                 </div>
-                <div
-                  className="border border-white/10 p-2.5 rounded-lg text-right"
-                  style={{ backgroundColor: 'rgba(17,24,39,0.95)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}
+                <span
+                  className="text-[10px] px-2 py-0.5 rounded-md font-mono text-green-400"
+                  style={{ backgroundColor: 'rgba(34,197,94,0.1)' }}
                 >
-                  <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Destination</p>
-                  <p className="text-xs font-semibold text-white">Mumbai Terminal</p>
-                </div>
+                  Operational
+                </span>
               </div>
 
               <div
-                className="relative z-20 border border-white/5 p-3 rounded-lg flex items-center justify-between"
-                style={{ backgroundColor: 'rgba(17,24,39,0.95)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}
+                className="h-[360px] w-full rounded-xl relative overflow-hidden border border-white/5 flex flex-col justify-between p-4"
+                style={{ backgroundColor: 'rgba(3,7,18,0.95)' }}
               >
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-md text-brand-orange" style={{ backgroundColor: 'rgba(246,146,30,0.1)' }}>
-                    <Navigation className="w-4 h-4 rotate-45" />
+                <div className="absolute inset-0 z-0">
+                  <img
+                    src="/img2.jpg"
+                    alt="P2P Heavy Commercial Fleet Lineup"
+                    className="w-full h-full object-cover opacity-40"
+                    style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
+                  />
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(to top, #030712 20%, rgba(3,7,18,0.3) 60%, transparent 100%)' }}
+                  />
+                </div>
+
+                <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 400 200">
+                  <path d="M 20 150 Q 120 30, 220 110 T 380 40" fill="none" stroke="rgba(30,41,59,0.5)" strokeWidth="3" />
+                  <motion.path
+                    d="M 20 150 Q 120 30, 220 110 T 380 40"
+                    fill="none"
+                    stroke="#F6921E"
+                    strokeWidth="3"
+                    strokeDasharray="10, 10"
+                    animate={{ strokeDashoffset: [0, -20] }}
+                    transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
+                  />
+                </svg>
+
+                <div className="flex justify-between relative z-20">
+                  <div
+                    className="border border-white/10 p-2.5 rounded-lg"
+                    style={{ backgroundColor: 'rgba(17,24,39,0.95)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}
+                  >
+                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Origin</p>
+                    <p className="text-xs font-semibold text-white">Chennai Hub</p>
                   </div>
-                  <div>
-                    <p className="text-xs font-bold">TN-01-PQ-9844</p>
-                    <p className="text-[10px] text-gray-400">En route • ETA 2.5 hrs</p>
+                  <div
+                    className="border border-white/10 p-2.5 rounded-lg text-right"
+                    style={{ backgroundColor: 'rgba(17,24,39,0.95)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}
+                  >
+                    <p className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Destination</p>
+                    <p className="text-xs font-semibold text-white">Mumbai Terminal</p>
                   </div>
                 </div>
-                <p className="text-xs font-mono font-bold text-green-400">1,040 km / 1,200 km</p>
+
+                <div
+                  className="relative z-20 border border-white/5 p-3 rounded-lg flex items-center justify-between"
+                  style={{ backgroundColor: 'rgba(17,24,39,0.95)', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-md text-brand-orange" style={{ backgroundColor: 'rgba(246,146,30,0.1)' }}>
+                      <Navigation className="w-4 h-4 rotate-45" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold">TN-01-PQ-9844</p>
+                      <p className="text-[10px] text-gray-400">En route • ETA 2.5 hrs</p>
+                    </div>
+                  </div>
+                  <p className="text-xs font-mono font-bold text-green-400">1,040 km / 1,200 km</p>
+                </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           <div
             className="absolute -inset-4 rounded-3xl -z-10"
