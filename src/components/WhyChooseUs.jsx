@@ -1,294 +1,59 @@
-import React from "react";
+import React from 'react';
 
-
-const cardStyle = {
-
-backgroundColor:
-"rgba(17,24,39,0.35)"
-
-};
-
-
-
-
-const cards=[
-
-
-{
-num:"01",
-title:"Pan India Coverage Logistics Network",
-span:"md:col-span-2",
-color:"text-blue-400",
-bg:"rgba(37,99,235,.3)",
-desc:
-"We interconnect multiple major trading zones seamlessly. Our deep geographical network reach covers vital economic corridors across India, facilitating rapid regional cross-dock transitions."
-},
-
-
-
-{
-num:"02",
-title:"Absolute Visibility",
-color:"text-brand-orange",
-bg:"rgba(246,146,30,.1)",
-desc:
-"Every single vehicle asset emits constant location tracking markers, verified instantly inside your operational dashboards."
-},
-
-
-
-{
-num:"03",
-title:"Secure Systems",
-color:"text-purple-400",
-bg:"rgba(168,85,247,.1)",
-desc:
-"Rigidly enforced lock protocols protecting heavy industrial goods and sensitive raw inputs safely."
-},
-
-
-
-{
-num:"04",
-title:"Dedicated Solution Support Engineering",
-span:"md:col-span-2",
-color:"text-emerald-400",
-bg:"rgba(16,185,129,.1)",
-desc:
-"Forget waiting through mechanical voice queues. We provide enterprise-level logistics account engineers actively monitoring exception workflows to maximize fulfillment reliability."
-}
-
-
+const cards = [
+  { num: '01', title: 'Pan India Coverage Logistics Network', span: 'md:col-span-2', color: 'text-blue-400', bg: 'rgba(37,99,235,0.3)', desc: 'We interconnect multiple major trading zones seamlessly. Our deep geographical network reach covers vital economic corridors across India, facilitating rapid regional cross-dock transitions.' },
+  { num: '02', title: 'Absolute Visibility', color: 'text-brand-orange', bg: 'rgba(246,146,30,0.1)', desc: 'Every single vehicle asset emits constant location tracking markers, verified instantly inside your operational dashboards.' },
+  { num: '03', title: 'Secure Systems', color: 'text-purple-400', bg: 'rgba(168,85,247,0.1)', desc: 'Rigidly enforced lock protocols protecting heavy industrial goods and sensitive raw inputs safely.' },
+  { num: '04', title: 'Dedicated Solution Support Engineering', span: 'md:col-span-2', color: 'text-emerald-400', bg: 'rgba(16,185,129,0.1)', desc: 'Forget waiting through mechanical voice queues. We provide enterprise-level logistics account engineers actively monitoring exception workflows to maximize fulfillment reliability.' },
 ];
 
-
-
-
-
-
-
-export default function WhyChooseUs(){
-
-
-return (
-
-<section
-
-className="
-py-32
-px-4
-max-w-7xl
-mx-auto
-relative
-z-10
-"
-
->
-
-
-
-
-{/* HEADER */}
-
-
-<div
-
-className="
-text-center
-max-w-3xl
-mx-auto
-mb-20
-space-y-4
-"
-
->
-
-
-
-<div
-
-className="
-text-xs
-font-bold
-tracking-widest
-text-brand-orange
-uppercase
-"
-
->
-
-Strategic Leverage
-
-</div>
-
-
-
-
-
-<h2
-
-className="
-text-4xl
-md:text-6xl
-font-black
-tracking-tight
-"
-
->
-
-Built For Mission-Critical Logistics
-
-</h2>
-
-
-
-</div>
-
-
-
-
-
-
-
-{/* CARDS */}
-
-<div
-
-className="
-grid
-grid-cols-1
-md:grid-cols-3
-gap-6
-"
-
->
-
-
-{
-
-
-cards.map(card=>(
-
-
-
-<div
-
-key={card.num}
-
-
-className={`
-p-8
-rounded-2xl
-border
-border-white/5
-space-y-4
-hover:border-white/10
-transition-colors
-duration-300
-
-${card.span || ""}
-
-`}
-
-
-style={cardStyle}
-
->
-
-
-
-
-<div
-
-className={`
-w-10
-h-10
-rounded-xl
-flex
-items-center
-justify-center
-font-bold
-
-${card.color}
-
-`}
-
-
-style={{
-
-backgroundColor:
-card.bg
-
-}}
-
->
-
-{card.num}
-
-</div>
-
-
-
-
-
-
-<h3
-
-className="
-text-2xl
-font-bold
-"
-
->
-
-{card.title}
-
-</h3>
-
-
-
-
-
-
-
-<p
-
-className="
-text-sm
-text-[#94A3B8]
-leading-relaxed
-"
-
->
-
-{card.desc}
-
-</p>
-
-
-
-
-
-</div>
-
-
-
-
-))
-
-}
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-)
-
-
+export default function WhyChooseUs() {
+  return (
+    <section className="py-32 px-4 max-w-7xl mx-auto relative z-10 overflow-hidden">
+      <div
+        className="absolute inset-0 -z-10 pointer-events-none"
+        style={{
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px)',
+          backgroundSize: '72px 100%',
+        }}
+      />
+      <div
+        className="absolute top-1/2 left-1/2 -z-10 pointer-events-none"
+        style={{
+          width: '600px',
+          height: '600px',
+          marginLeft: '-300px',
+          marginTop: '-300px',
+          background: 'radial-gradient(ellipse at center, rgba(37,99,235,0.06) 0%, transparent 70%)',
+        }}
+      />
+
+      <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
+        <div className="text-xs font-bold tracking-widest text-brand-orange uppercase">Strategic Leverage</div>
+        <h2 className="text-4xl md:text-6xl font-black tracking-tight">Built For Mission-Critical Logistics</h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {cards.map(card => (
+          <div
+            key={card.num}
+            className={`p-8 rounded-2xl border border-white/5 space-y-4 hover:border-white/10 transition-colors duration-300 ${card.span || ''}`}
+            style={{
+              backgroundColor: 'rgba(17,24,39,0.35)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+            }}
+          >
+            <div
+              className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold ${card.color}`}
+              style={{ backgroundColor: card.bg }}
+            >
+              {card.num}
+            </div>
+            <h3 className="text-2xl font-bold">{card.title}</h3>
+            <p className="text-sm text-[#94A3B8] leading-relaxed">{card.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

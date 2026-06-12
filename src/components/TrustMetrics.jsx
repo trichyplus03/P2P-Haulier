@@ -1,503 +1,94 @@
-import React,{
-useEffect,
-useState,
-useRef
-} from "react";
+import React, { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { ShieldCheck, Users, Globe2, Award } from 'lucide-react';
 
-import {
-motion
-} from "framer-motion";
-
-
-import {
-ShieldCheck,
-Users,
-Globe2,
-Award
-} from "lucide-react";
-
-
-
-
-function formatNumber(num){
-
-return num
-.toString()
-.replace(/\B(?=(\d{3})+(?!\d))/g,",");
-
+function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 
+const RunningCounter = ({ from = 0, to, duration = 1500, suffix = '' }) => {
+  const [count, setCount] = useState(from);
+  const ref = useRef(null);
+  const started = useRef(false);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
 
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          let startTime = null;
 
+          const animate = (time) => {
+            if (!startTime) startTime = time;
+            const progress = Math.min((time - startTime) / duration, 1);
+            const value = Math.floor(progress * (to - from) + from);
+            setCount(value);
+            if (progress < 1) requestAnimationFrame(animate);
+          };
 
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.2 }
+    );
 
-const RunningCounter=({
+    observer.observe(el);
+    return () => { observer.disconnect(); };
+  }, [from, to, duration]);
 
-from=0,
-to,
-duration=1500,
-suffix=""
-
-})=>{
-
-
-const [count,setCount]=useState(from);
-
-const ref=useRef(null);
-
-const started=useRef(false);
-
-
-
-
-useEffect(()=>{
-
-
-const el=ref.current;
-
-if(!el)return;
-
-
-
-const observer=
-new IntersectionObserver(
-
-([entry])=>{
-
-
-if(
-entry.isIntersecting &&
-!started.current
-){
-
-started.current=true;
-
-
-let startTime=null;
-
-
-
-const animate=(time)=>{
-
-
-if(!startTime)
-
-startTime=time;
-
-
-
-const progress=
-
-Math.min(
-
-(time-startTime)
-
-/duration,
-
-1
-
-);
-
-
-
-const value=
-
-Math.floor(
-
-progress*
-
-(to-from)
-
-+from
-
-);
-
-
-
-setCount(value);
-
-
-
-if(progress<1){
-
-requestAnimationFrame(
-animate
-);
-
-}
-
-
+  return (
+    <span ref={ref} className="font-mono">
+      {formatNumber(count)}{suffix}
+    </span>
+  );
 };
 
-
-
-requestAnimationFrame(
-animate
-);
-
-
-
-}
-
-
-},
-
-{
-threshold:.2
-}
-
-);
-
-
-
-observer.observe(el);
-
-
-
-return()=>{
-
-observer.disconnect();
-
-};
-
-
-
-},[from,to,duration]);
-
-
-
-
-return (
-
-<span
-
-ref={ref}
-
-className="font-mono"
-
->
-
-{formatNumber(count)}
-
-{suffix}
-
-</span>
-
-);
-
-
-};
-
-
-
-
-
-
-
-
-
-
-export default function TrustMetrics(){
-
-
-
-const metrics=[
-
-
-{
-icon:Users,
-title:"Active Clients",
-value:1250,
-suffix:"+",
-desc:
-"Enterprise partners trusting our ecosystem daily."
-},
-
-
-{
-icon:Globe2,
-title:"Kilometers Covered",
-value:450000,
-suffix:" km",
-desc:
-"Heavy linehaul distribution across primary commercial grids."
-},
-
-
-{
-icon:ShieldCheck,
-title:"SLA Success Rate",
-value:99,
-suffix:"%",
-desc:
-"Precision timing verified via programmatic ledger checkpoints."
-},
-
-
-{
-icon:Award,
-title:"Fleet Strength",
-value:350,
-suffix:"+",
-desc:
-"Multi-modal transport vehicles active on public telemetry."
-}
-
-
-];
-
-
-
-
-
-
-
-
-return (
-
-<section
-
-className="
-pt-16
-pb-6
-max-w-7xl
-mx-auto
-px-4
-relative
-z-10
-border-t
-border-white/5
-mt-12
-"
-
->
-
-
-
-
-<div
-
-className="
-grid
-grid-cols-1
-sm:grid-cols-2
-lg:grid-cols-4
-gap-8
-"
-
->
-
-
-{
-
-
-metrics.map((metric,idx)=>(
-
-
-
-<motion.div
-
-
-key={metric.title}
-
-
-
-initial={{
-opacity:0,
-y:25
-}}
-
-
-whileInView={{
-opacity:1,
-y:0
-}}
-
-
-viewport={{
-
-once:true,
-amount:.2
-
-}}
-
-
-transition={{
-
-duration:.4,
-
-delay:
-idx*.03
-
-}}
-
-
-
-className="
-p-6
-rounded-2xl
-border
-border-white/5
-flex
-flex-col
-justify-between
-hover:border-white/10
-transition-colors
-duration-300
-"
-
-
-
-style={{
-
-backgroundColor:
-
-"rgba(17,24,39,.25)"
-
-}}
-
->
-
-
-
-
-
-
-<div>
-
-
-<div
-
-className="
-w-10
-h-10
-rounded-xl
-border
-border-white/10
-flex
-items-center
-justify-center
-text-brand-orange
-mb-4
-"
-
-
-style={{
-
-backgroundColor:
-
-"rgba(255,255,255,.05)"
-
-}}
-
->
-
-
-<metric.icon
-
-className="w-5 h-5"
-
-/>
-
-
-</div>
-
-
-
-
-
-
-<p
-
-className="
-text-xs
-font-bold
-tracking-widest
-text-[#94A3B8]
-uppercase
-mb-1
-"
-
->
-
-{metric.title}
-
-</p>
-
-
-
-
-
-
-<h3
-
-className="
-text-4xl
-lg:text-5xl
-font-black
-text-white
-tracking-tight
-mb-2
-"
-
->
-
-
-<RunningCounter
-
-to={metric.value}
-
-suffix={metric.suffix}
-
-/>
-
-
-</h3>
-
-
-</div>
-
-
-
-
-
-<p
-
-className="
-text-sm
-text-gray-500
-font-light
-leading-relaxed
-"
-
->
-
-{metric.desc}
-
-</p>
-
-
-
-
-</motion.div>
-
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-</section>
-
-
-)
-
-
+export default function TrustMetrics() {
+  const metrics = [
+    { icon: Users, title: 'Active Clients', value: 1250, suffix: '+', desc: 'Enterprise partners trusting our ecosystem daily.' },
+    { icon: Globe2, title: 'Kilometers Covered', value: 450000, suffix: ' km', desc: 'Heavy linehaul distribution across primary commercial grids.' },
+    { icon: ShieldCheck, title: 'SLA Success Rate', value: 99, suffix: '%', desc: 'Precision timing verified via programmatic ledger checkpoints.' },
+    { icon: Award, title: 'Fleet Strength', value: 350, suffix: '+', desc: 'Multi-modal transport vehicles active on public telemetry.' },
+  ];
+
+  return (
+    <section
+      className="pt-16 pb-6 max-w-7xl mx-auto px-4 relative z-10 mt-12"
+      style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        {metrics.map((metric, idx) => (
+          <motion.div
+            key={metric.title}
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.4, delay: idx * 0.03 }}
+            className="p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-white/10 transition-colors duration-300"
+            style={{
+              backgroundColor: 'rgba(17,24,39,0.25)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.03)',
+            }}
+          >
+            <div>
+              <div
+                className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-brand-orange mb-4"
+                style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}
+              >
+                <metric.icon className="w-5 h-5" />
+              </div>
+              <p className="text-xs font-bold tracking-widest text-[#94A3B8] uppercase mb-1">{metric.title}</p>
+              <h3 className="text-4xl lg:text-5xl font-black text-white tracking-tight mb-2">
+                <RunningCounter to={metric.value} suffix={metric.suffix} />
+              </h3>
+            </div>
+            <p className="text-sm text-gray-500 font-light leading-relaxed">{metric.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
 }

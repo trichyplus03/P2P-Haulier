@@ -16,53 +16,12 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#030712] text-white font-sans antialiased selection:bg-brand-orange selection:text-black overflow-x-hidden">
-
-      {/* GLOBAL AMBIENT GLOWS
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: '-10%', left: '-10%',
-            width: '50vw', height: '50vw',
-            // Fix: bg-brand-blue/20 with blur — use rgba + filter for reliable iOS rendering
-            backgroundColor: 'rgba(37,99,235,0.2)',
-            filter: 'blur(120px)',
-            WebkitFilter: 'blur(120px)',
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: '30%', right: '-10%',
-            width: '45vw', height: '45vw',
-            backgroundColor: 'rgba(249,115,22,0.05)',
-            filter: 'blur(150px)',
-            WebkitFilter: 'blur(150px)',
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            bottom: '10%', left: '10%',
-            width: '60vw', height: '60vw',
-            backgroundColor: 'rgba(37,99,235,0.1)',
-            filter: 'blur(180px)',
-            WebkitFilter: 'blur(180px)',
-          }}
-        />
-       
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'linear-gradient(to right, rgba(31,41,55,0.065) 1px, transparent 1px), linear-gradient(to bottom, rgba(31,41,55,0.065) 1px, transparent 1px)',
-            backgroundSize: '4rem 4rem',
-          }}
-        />
-      </div> */}
-
+    <div
+      className="min-h-screen text-white font-sans antialiased overflow-x-hidden"
+      style={{ backgroundColor: '#030712' }}
+    >
       <Navbar />
-      <main className="relative z-10">
+      <main>
         <Hero />
         <TrustMetrics />
         <Services />
