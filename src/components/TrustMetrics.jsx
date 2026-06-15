@@ -77,10 +77,10 @@ function TiltCard({ children, delay }) {
           rotateY,
           transformStyle: 'preserve-3d',
           WebkitTransformStyle: 'preserve-3d',
-          backgroundColor: 'rgba(17,24,39,0.25)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)',
+          backgroundColor: 'rgba(37, 99, 235, 0.12)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
         }}
-        className="p-6 rounded-2xl border border-white/5 flex flex-col justify-between hover:border-white/10 transition-colors duration-300 h-full"
+        className="p-6 rounded-2xl border border-brand-blue/15 flex flex-col justify-between hover:border-brand-blue/40 transition-colors duration-300 h-full"
       >
         {children}
       </motion.div>

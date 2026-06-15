@@ -34,16 +34,6 @@ export default function ProcessTimeline() {
       </div>
 
       <div className="relative">
-        <div
-          className="absolute left-0 w-full hidden lg:block"
-          style={{
-            top: '50%',
-            height: '2px',
-            transform: 'translateY(-50%)',
-            WebkitTransform: 'translateY(-50%)',
-            backgroundColor: 'rgba(255,255,255,0.05)',
-          }}
-        />
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 relative z-10">
           {workflowSteps.map((proc, idx) => (
