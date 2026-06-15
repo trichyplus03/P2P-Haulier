@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const workflowSteps = [
   { step: '01', name: 'Instant Booking', desc: 'Upload manifest file formats straight through our enterprise API interface structures.' },
@@ -10,8 +10,23 @@ const workflowSteps = [
 ];
 
 export default function ProcessTimeline() {
+  const containerRef = useRef(null);
+  
+  // Track scroll progress of the timeline section
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
+  // Smooth the scroll line animation
+  const scaleProgress = useSpring(scrollYProgress, {
+    stiffness: 80,
+    damping: 25,
+    restDelta: 0.001
+  });
+
   return (
-    <section className="py-32 max-w-7xl mx-auto px-4 relative z-10 overflow-hidden">
+    <section ref={containerRef} className="py-32 max-w-7xl mx-auto px-4 relative z-10 overflow-hidden">
       <div
         className="absolute inset-0 -z-10 pointer-events-none"
         style={{
@@ -34,6 +49,21 @@ export default function ProcessTimeline() {
       </div>
 
       <div className="relative">
+        {/* Horizontal timeline line for desktop - passing through the center of 32px (h-8) step indicators at y=40px (top-10) */}
+        <div className="absolute top-10 left-10 right-10 h-[2px] bg-white/5 hidden lg:block -z-0">
+          <motion.div
+            className="h-full bg-brand-orange origin-left shadow-[0_0_12px_rgba(246,146,30,0.5)]"
+            style={{ scaleX: scaleProgress }}
+          />
+        </div>
+
+        {/* Vertical timeline line for mobile - passing through the center of 32px step indicators at x=40px (left-10) */}
+        <div className="absolute left-10 top-10 bottom-10 w-[2px] bg-white/5 block lg:hidden -z-0">
+          <motion.div
+            className="w-full bg-brand-orange origin-top shadow-[0_0_12px_rgba(246,146,30,0.5)]"
+            style={{ scaleY: scaleProgress }}
+          />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 relative z-10">
           {workflowSteps.map((proc, idx) => (

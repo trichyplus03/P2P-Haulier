@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin } from 'lucide-react';
 
+const regionalHubs = [
+  { id: 'delhi', name: 'Delhi NCR Hub', x: '45%', y: '25%', stats: '82 active loads • SLA 99.4%' },
+  { id: 'mumbai', name: 'Mumbai Terminal', x: '25%', y: '58%', stats: '114 active loads • SLA 99.1%' },
+  { id: 'bengaluru', name: 'Bengaluru Hub', x: '35%', y: '78%', stats: '76 active loads • SLA 99.6%' },
+  { id: 'chennai', name: 'Chennai Dock Terminal', x: '45%', y: '82%', stats: '94 active loads • SLA 99.2%' },
+  { id: 'kolkata', name: 'Kolkata Cross-Dock', x: '75%', y: '45%', stats: '52 active loads • SLA 98.9%' },
+];
+
 export default function CoverageNetwork() {
+  const [hoveredHub, setHoveredHub] = useState(null);
+
   return (
     <section className="py-32 max-w-7xl mx-auto px-4 relative z-10 overflow-hidden">
       <div
@@ -47,38 +58,115 @@ export default function CoverageNetwork() {
         </div>
 
         <div
-          className="lg:col-span-7 p-6 rounded-2xl border border-white/5 relative overflow-hidden h-[380px] flex items-center justify-center"
+          className="lg:col-span-7 p-6 rounded-2xl border border-white/5 relative overflow-hidden h-[380px] flex flex-col justify-between"
           style={{
             backgroundColor: 'rgba(17,24,39,0.35)',
             boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
           }}
         >
-          <div className="absolute inset-0 z-0 opacity-10">
-            <img
-              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000"
-              alt="Network"
-              loading="lazy"
-              className="w-full h-full object-cover"
-              style={{ WebkitTransform: 'translateZ(0)', transform: 'translateZ(0)' }}
-            />
-          </div>
-          <div
-            className="absolute inset-0 opacity-10"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #F6921E 2px, transparent 2px)',
-              backgroundSize: '24px 24px',
-            }}
-          />
+          {/* Map Grid Canvas Area */}
+          <div className="relative w-full flex-1 min-h-[220px]">
+            {/* SVG Interconnecting Routes */}
+            <svg className="absolute inset-0 w-full h-full stroke-blue-500/10 fill-none" strokeWidth="1.5">
+              {/* Route lines */}
+              <line x1="45%" y1="25%" x2="25%" y2="58%" />
+              <line x1="25%" y1="58%" x2="35%" y2="78%" />
+              <line x1="35%" y1="78%" x2="45%" y2="82%" />
+              <line x1="45%" y1="82%" x2="75%" y2="45%" />
+              <line x1="75%" y1="45%" x2="45%" y2="25%" />
+              <line x1="25%" y1="58%" x2="45%" y2="82%" />
+              <line x1="45%" y1="25%" x2="35%" y2="78%" />
 
-          <div className="space-y-4 text-center relative z-10">
-            <div
-              className="inline-flex p-3 rounded-full text-blue-400 border border-blue-500/20 animate-bounce"
-              style={{ backgroundColor: 'rgba(37,99,235,0.3)', willChange: 'transform' }}
-            >
-              <MapPin className="w-6 h-6 text-brand-orange" />
-            </div>
-            <p className="text-xs font-mono tracking-widest text-gray-400 uppercase">Interactive Network Matrix Grid Connected</p>
-            <p className="text-[11px] text-gray-500 max-w-xs mx-auto">Seamless asset pooling orchestration active across all major industrial production hubs.</p>
+              {/* Active flowing data coordinate streams */}
+              <motion.line
+                x1="45%" y1="25%" x2="25%" y2="58%"
+                className="stroke-brand-orange/40"
+                strokeWidth="2"
+                strokeDasharray="6, 8"
+                animate={{ strokeDashoffset: [0, -28] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+              />
+              <motion.line
+                x1="25%" y1="58%" x2="45%" y2="82%"
+                className="stroke-brand-orange/40"
+                strokeWidth="2"
+                strokeDasharray="6, 8"
+                animate={{ strokeDashoffset: [0, 28] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+              />
+              <motion.line
+                x1="45%" y1="82%" x2="75%" y2="45%"
+                className="stroke-brand-orange/40"
+                strokeWidth="2"
+                strokeDasharray="6, 8"
+                animate={{ strokeDashoffset: [0, -28] }}
+                transition={{ duration: 3.5, repeat: Infinity, ease: 'linear' }}
+              />
+            </svg>
+
+            {/* Hub interactive nodes */}
+            {regionalHubs.map(hub => {
+              const isHovered = hoveredHub?.id === hub.id;
+              return (
+                <div
+                  key={hub.id}
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20 group p-4"
+                  style={{ left: hub.x, top: hub.y }}
+                  onMouseEnter={() => setHoveredHub(hub)}
+                  onMouseLeave={() => setHoveredHub(null)}
+                >
+                  <div className="relative">
+                    {/* Ring ping */}
+                    <span className={`absolute -inset-1.5 rounded-full bg-brand-orange/30 animate-ping transition-transform duration-300 ${isHovered ? 'scale-150 bg-brand-orange/50' : ''}`} />
+                    {/* Inner point dot */}
+                    <div className={`w-3.5 h-3.5 rounded-full border border-white/20 transition-all duration-300 ${isHovered ? 'bg-white scale-125 shadow-[0_0_12px_#ffffff]' : 'bg-brand-orange'}`} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Telemetry metadata log block */}
+          <div
+            className="w-full border-t border-white/5 pt-4 mt-2 flex items-center justify-between min-h-[58px]"
+          >
+            <AnimatePresence mode="wait">
+              {hoveredHub ? (
+                <motion.div
+                  key={hoveredHub.id}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-4 w-full"
+                >
+                  <div className="p-2 rounded-lg bg-brand-orange/10 border border-brand-orange/20 text-brand-orange flex-shrink-0">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono font-bold text-white uppercase tracking-wider">{hoveredHub.name}</p>
+                    <p className="text-[11px] text-green-400 font-mono mt-0.5">{hoveredHub.stats}</p>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="default-telemetry"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.15 }}
+                  className="flex items-center gap-4 w-full text-left"
+                >
+                  <div className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 flex-shrink-0">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono font-bold text-gray-400 uppercase tracking-wider">Telemetry Interface Matrix</p>
+                    <p className="text-[11px] text-gray-500 font-mono mt-0.5">Hover on a node to load coordinates and current SLA parameters.</p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

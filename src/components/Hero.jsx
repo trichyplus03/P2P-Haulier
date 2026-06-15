@@ -1,6 +1,47 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowUpRight, Navigation } from 'lucide-react';
+
+function MagneticButton({ children, className, href, style }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const springX = useSpring(x, { stiffness: 100, damping: 10 });
+  const springY = useSpring(y, { stiffness: 100, damping: 10 });
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set((clientX - centerX) * 0.22);
+    y.set((clientY - centerY) * 0.22);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      style={{
+        ...style,
+        x: springX,
+        y: springY,
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -24,6 +65,52 @@ export default function Hero() {
           backgroundSize: '48px 48px',
         }}
       />
+      
+      {/* Glowing Laser Grid Pulses */}
+      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden opacity-30">
+        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="laser-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="transparent" />
+              <stop offset="50%" stopColor="#F6921E" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+            <linearGradient id="laser-grad-v" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="transparent" />
+              <stop offset="50%" stopColor="#2563eb" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="transparent" />
+            </linearGradient>
+          </defs>
+          
+          {/* Horizontal Laser pulses */}
+          <motion.line 
+            x1="0%" y1="20%" x2="100%" y2="20%" 
+            stroke="url(#laser-grad)" strokeWidth="1.5"
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
+          />
+          <motion.line 
+            x1="0%" y1="60%" x2="100%" y2="60%" 
+            stroke="url(#laser-grad)" strokeWidth="1.5"
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 14, ease: "linear", delay: 4 }}
+          />
+
+          {/* Vertical Laser pulses */}
+          <motion.line 
+            x1="30%" y1="0%" x2="30%" y2="100%" 
+            stroke="url(#laser-grad-v)" strokeWidth="1.5"
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 12, ease: "linear", delay: 2 }}
+          />
+          <motion.line 
+            x1="75%" y1="0%" x2="75%" y2="100%" 
+            stroke="url(#laser-grad-v)" strokeWidth="1.5"
+            animate={{ y: ["-100%", "100%"] }}
+            transition={{ repeat: Infinity, duration: 16, ease: "linear", delay: 6 }}
+          />
+        </svg>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <motion.div
@@ -64,20 +151,20 @@ export default function Hero() {
           </motion.p>
 
           <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 pt-4">
-            <a
+            <MagneticButton
               href="#contact"
-              className="px-8 py-4 rounded-xl bg-brand-orange text-black font-bold flex items-center gap-2 hover:bg-orange-500 transition-colors duration-300"
+              className="px-8 py-4 rounded-xl bg-brand-orange text-black font-bold flex items-center gap-2 hover:bg-orange-500 transition-colors duration-300 cursor-pointer"
               style={{ WebkitTapHighlightColor: 'transparent' }}
             >
-              Get Free Quote <ArrowUpRight className="w-5 h-5" />
-            </a>
-            <a
+              Get Free Quote <ArrowUpRight className="w-5 h-5 flex-shrink-0" />
+            </MagneticButton>
+            <MagneticButton
               href="#technology"
-              className="px-8 py-4 rounded-xl border border-white/10 text-white font-medium flex items-center gap-2 hover:bg-white/10 transition-colors duration-300"
+              className="px-8 py-4 rounded-xl border border-white/10 text-white font-medium flex items-center gap-2 hover:bg-white/10 transition-colors duration-300 cursor-pointer"
               style={{ backgroundColor: 'rgba(255,255,255,0.05)', WebkitTapHighlightColor: 'transparent' }}
             >
               Track Shipment
-            </a>
+            </MagneticButton>
           </motion.div>
         </motion.div>
 

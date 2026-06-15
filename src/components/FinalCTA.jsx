@@ -1,5 +1,46 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
+
+function MagneticButton({ children, className, href, style }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const springX = useSpring(x, { stiffness: 100, damping: 10 });
+  const springY = useSpring(y, { stiffness: 100, damping: 10 });
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const { clientX, clientY } = e;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set((clientX - centerX) * 0.22);
+    y.set((clientY - centerY) * 0.22);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      style={{
+        ...style,
+        x: springX,
+        y: springY,
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.a>
+  );
+}
 
 export default function FinalCTA() {
   return (
@@ -65,20 +106,20 @@ export default function FinalCTA() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="flex flex-col sm:flex-row justify-center gap-4 pt-2"
             >
-              <a
+              <MagneticButton
                 href="#contact"
-                className="px-8 py-4 rounded-xl bg-white text-black font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors duration-300"
+                className="px-8 py-4 rounded-xl bg-white text-black font-bold flex items-center justify-center gap-2 hover:bg-gray-200 transition-colors duration-300 cursor-pointer"
                 style={{ WebkitTapHighlightColor: 'transparent' }}
               >
                 Request Enterprise Quote
-              </a>
-              <a
+              </MagneticButton>
+              <MagneticButton
                 href="#contact"
-                className="px-8 py-4 rounded-xl border border-white/10 text-white font-medium hover:bg-white/10 transition-colors duration-300"
+                className="px-8 py-4 rounded-xl border border-white/10 text-white font-medium hover:bg-white/10 transition-colors duration-300 cursor-pointer"
                 style={{ backgroundColor: 'rgba(255,255,255,0.05)', WebkitTapHighlightColor: 'transparent' }}
               >
                 Contact Strategy Team
-              </a>
+              </MagneticButton>
             </motion.div>
           </div>
         </div>
